@@ -1,5 +1,4 @@
 import axios from "axios";
-import { exp } from "firebase/firestore/pipelines";
 const API_KEY = "AIzaSyDN2a-FHPFYtcp8g63jcS8gavIDstAKilM";
 
 export async function authenticate(mode, email, password) {
@@ -9,11 +8,12 @@ export async function authenticate(mode, email, password) {
     password: password,
     returnSecureToken: true,
   });
-  console.log(response.data);
+  const token = response.data.idToken;
+  return token;
 }
-export async function createUser(email, password) {
-  await authenticate("signUp", email, password);
+export function createUser(email, password) {
+  return authenticate("signUp", email, password);
 }
-export async function login(email, password) {
-  await authenticate("signInWithPassword", email, password);
+export function login(email, password) {
+  return authenticate("signInWithPassword", email, password);
 }
